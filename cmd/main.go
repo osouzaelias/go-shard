@@ -16,7 +16,7 @@ func main() {
 
 	rz := domain.New(shards, xxhash.Sum64String)
 
-	for i := 0; i < 300000; i++ {
+	for i := 0; i < 9000000; i++ {
 		keyName := fmt.Sprintf("Key%d", i)
 		shard := rz.Lookup(keyName)
 		keyDistribution[shard]++
@@ -35,7 +35,7 @@ func main() {
 	rz.Remove("Shard1")
 	keyDistribution = make(map[string]int)
 
-	for i := 0; i < 300000; i++ {
+	for i := 0; i < 9000000; i++ {
 		keyName := fmt.Sprintf("Key%d", i)
 		shard := rz.Lookup(keyName)
 		keyDistribution[shard]++
