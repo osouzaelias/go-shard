@@ -17,7 +17,7 @@ func main() {
 		shards = append(shards, fmt.Sprintf("Shard%d", i))
 	}
 
-	rz := domain.New(shards, xxhash.Sum64String)
+	rz := domain.NewRendezvous(shards, xxhash.Sum64String)
 
 	fmt.Println("Distributes 100,000 keys")
 	fmt.Println()
@@ -35,9 +35,10 @@ func main() {
 	// -------------------------------------------------------------------------
 
 	fmt.Println()
-	fmt.Println("Remove o Shard1")
+	fmt.Println("Remove o Shard1 and Shard5")
 
 	rz.Remove("Shard1")
+	rz.Remove("Shard5")
 	keyDistribution = make(map[string]int)
 
 	fmt.Println()

@@ -40,9 +40,9 @@ type Rendezvous struct {
 
 type Hasher func(s string) uint64
 
-// New é um construtor para criar uma nova instância da estrutura Rendezvous.
+// NewRendezvous é um construtor para criar uma nova instância da estrutura Rendezvous.
 // Ele inicializa os mapas e slices e calcula os hashes dos nós usando a função hasher fornecida.
-func New(nodes []string, hash Hasher) *Rendezvous {
+func NewRendezvous(nodes []string, hash Hasher) *Rendezvous {
 	r := &Rendezvous{
 		nodes: make(map[string]int, len(nodes)),
 		nstr:  make([]string, len(nodes)),
