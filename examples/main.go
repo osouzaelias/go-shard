@@ -9,6 +9,9 @@ import (
 func main() {
 	keyDistribution := make(map[string]int)
 
+	fmt.Println()
+	fmt.Println("Adds 10 shads")
+
 	shards := make([]string, 0)
 	for i := 0; i < 10; i++ {
 		shards = append(shards, fmt.Sprintf("Shard%d", i))
@@ -16,7 +19,10 @@ func main() {
 
 	rz := domain.New(shards, xxhash.Sum64String)
 
-	for i := 0; i < 9000000; i++ {
+	fmt.Println("Distributes 100,000 keys")
+	fmt.Println()
+
+	for i := 0; i < 100000; i++ {
 		keyName := fmt.Sprintf("Key%d", i)
 		shard := rz.Lookup(keyName)
 		keyDistribution[shard]++
@@ -30,12 +36,14 @@ func main() {
 
 	fmt.Println()
 	fmt.Println("Remove o Shard1")
-	fmt.Println()
 
 	rz.Remove("Shard1")
 	keyDistribution = make(map[string]int)
 
-	for i := 0; i < 9000000; i++ {
+	fmt.Println()
+	fmt.Println("Distributes 100,000 keys")
+
+	for i := 0; i < 100000; i++ {
 		keyName := fmt.Sprintf("Key%d", i)
 		shard := rz.Lookup(keyName)
 		keyDistribution[shard]++

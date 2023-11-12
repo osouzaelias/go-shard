@@ -1,4 +1,4 @@
-# go-shard-balance
+# go-shard
 
 
 
@@ -7,3 +7,6 @@
 
 - [Consistent Hashing: Algorithmic Tradeoffs](https://dgryski.medium.com/consistent-hashing-algorithmic-tradeoffs-ef6b8e2fcae8)
 - [Client lib for redis](https://github.com/redis/go-redis/blob/21bd40a47e56e61c0598ea1bdf8e02e67d1aa651/ring.go#L28) 
+- [Rendezvous hashing](https://en.wikipedia.org/wiki/Rendezvous_hashing)
+- [xxHash non-cryptographic hash algorithm](https://xxhash.com/)
+- [Xorshift random number generators,](https://en.wikipedia.org/wiki/Xorshift)
