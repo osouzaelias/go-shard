@@ -2,8 +2,10 @@ package grpc
 
 import (
 	"fmt"
+	"go-shard/config"
 	"go-shard/internal/ports"
 	pkg "go-shard/pkg/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 
@@ -34,9 +36,9 @@ func (a Adapter) Run() {
 	)
 	a.server = grpcServer
 	pkg.RegisterShardServer(grpcServer, a)
-	//if config.GetEnv() == "development" {
-	//	reflection.Register(grpcServer)
-	//}
+	if config.GetEnv() == "development" {
+		reflection.Register(grpcServer)
+	}
 
 	log.Printf("starting balance-shard service on port %d ...", a.port)
 	if err := grpcServer.Serve(listen); err != nil {

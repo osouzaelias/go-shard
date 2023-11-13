@@ -11,8 +11,8 @@ import (
 )
 
 type Shard struct {
-	Tenant string `dynamodbav:"COD_TNT"`
-	Total  uint8  `dynamodbav:"QTD_TOT_SRD"`
+	Tenant string `dynamodbav:"tenant"`
+	Total  uint8  `dynamodbav:"numberOfShards"`
 }
 
 type Adapter struct {
@@ -34,7 +34,7 @@ func (a Adapter) Get(ctx context.Context, tenant string) (*domain.Shard, error) 
 
 	input := &dynamodb.GetItemInput{
 		Key: map[string]types.AttributeValue{
-			"COD_TNT": &types.AttributeValueMemberS{Value: tenant},
+			"tenant": &types.AttributeValueMemberS{Value: tenant},
 		},
 		TableName: aws.String(a.tableName),
 	}
