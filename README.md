@@ -34,10 +34,6 @@ grpcurl -d '{"tenant": "", "customer_id": "osouzaelias" }' -plaintext localhost:
 
 ## Executando com REST
 
-```shell
-curl 
-```
-
 ### Testando o servidor
 
 faça uma chamada no endpoint de health
