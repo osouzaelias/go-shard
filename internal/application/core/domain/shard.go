@@ -1,7 +1,7 @@
 package domain
 
 type Shard struct {
-	ID     string `json:"id"`
-	Tenant string `json:"tenant"`
-	Total  uint8  `json:"total"`
+	ShardID  string `json:"shard_id"`
+	TenantID string `json:"tenant_id"`
+	Address  string `json:"address"`
 }

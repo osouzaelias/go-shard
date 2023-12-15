@@ -6,5 +6,5 @@ import (
 )
 
 type DBPort interface {
-	Get(ctx context.Context, tenant string) (*domain.Shard, error)
+	Get(ctx context.Context, tenant string) (*[]domain.Shard, error)
 }

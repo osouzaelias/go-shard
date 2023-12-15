@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Shard_Get_FullMethodName = "/Shard/Get"
+	Shard_Get_FullMethodName = "/Shard/Proxy"
 )
 
 // ShardClient is the client API for Shard service.
@@ -59,7 +59,7 @@ type UnimplementedShardServer struct {
 }
 
 func (UnimplementedShardServer) Get(context.Context, *GetShardRequest) (*GetShardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method Proxy not implemented")
 }
 func (UnimplementedShardServer) mustEmbedUnimplementedShardServer() {}
 
@@ -100,7 +100,7 @@ var Shard_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ShardServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Get",
+			MethodName: "Proxy",
 			Handler:    _Shard_Get_Handler,
 		},
 	},

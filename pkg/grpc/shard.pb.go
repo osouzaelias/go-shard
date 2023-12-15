@@ -159,8 +159,8 @@ var file_shard_proto_goTypes = []interface{}{
 	(*GetShardResponse)(nil), // 1: GetShardResponse
 }
 var file_shard_proto_depIdxs = []int32{
-	0, // 0: Shard.Get:input_type -> GetShardRequest
-	1, // 1: Shard.Get:output_type -> GetShardResponse
+	0, // 0: Shard.Proxy:input_type -> GetShardRequest
+	1, // 1: Shard.Proxy:output_type -> GetShardResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

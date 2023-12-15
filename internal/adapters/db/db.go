@@ -5,8 +5,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
+	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"go-shard/internal/application/core/domain"
 )
 
@@ -29,28 +29,29 @@ func NewAdapter(region, tableName string) (*Adapter, error) {
 	return &Adapter{db: client, tableName: tableName}, nil
 }
 
-func (a Adapter) Get(ctx context.Context, tenant string) (*domain.Shard, error) {
-	var shardEntity Shard
+func (a Adapter) Get(ctx context.Context, tenantID string) (*[]domain.Shard, error) {
+	var shards = make([]domain.Shard, 0)
 
-	input := &dynamodb.GetItemInput{
-		Key: map[string]types.AttributeValue{
-			"tenant": &types.AttributeValueMemberS{Value: tenant},
-		},
-		TableName: aws.String(a.tableName),
+	partitionKey := expression.Key("tenantID").Equal(expression.Value(tenantID))
+	expr, err := expression.NewBuilder().WithKeyCondition(partitionKey).Build()
+
+	input := &dynamodb.QueryInput{
+		KeyConditionExpression:    expr.KeyCondition(),
+		ProjectionExpression:      expr.Projection(),
+		ExpressionAttributeNames:  expr.Names(),
+		ExpressionAttributeValues: expr.Values(),
+		TableName:                 aws.String(a.tableName),
 	}
 
-	output, err := a.db.GetItem(ctx, input)
+	out, err := a.db.Query(ctx, input)
 	if err != nil {
 		return nil, err
 	}
 
-	err = attributevalue.UnmarshalMap(output.Item, &shardEntity)
+	err = attributevalue.UnmarshalListOfMaps(out.Items, &shards)
 	if err != nil {
 		return nil, err
 	}
 
-	return &domain.Shard{
-		Tenant: shardEntity.Tenant,
-		Total:  shardEntity.Total,
-	}, nil
+	return &shards, nil
 }

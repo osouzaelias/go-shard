@@ -2,26 +2,24 @@ package rest
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"go-shard/internal/ports"
 	"log"
+	"net/http"
 )
 
 type Adapter struct {
-	api    ports.APIPort
-	port   int
-	server *gin.Engine
+	api  ports.APIPort
+	port int
 }
 
 func NewAdapter(api ports.APIPort, port int) *Adapter {
-	return &Adapter{api: api, port: port, server: gin.Default()}
+	return &Adapter{api: api, port: port}
 }
 
 func (a Adapter) Run() {
-	a.server.GET("/v1/health", a.HealthCheck)
-	a.server.GET("/v1/shard", a.Get)
+	http.HandleFunc("/health", a.HealthCheck)
+	http.HandleFunc("/", a.Proxy)
 
-	if err := a.server.Run(fmt.Sprintf(":%d", a.port)); err != nil {
-		log.Fatal("error when initializing server", err)
-	}
+	println("Proxy server running on http://localhost:", a.port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", a.port), nil))
 }

@@ -39,13 +39,13 @@ grpcurl -d '{"tenant": "", "customer_id": "osouzaelias" }' -plaintext localhost:
 faça uma chamada no endpoint de health
 
 ```shell
-curl http://localhost:8081/v1/health
+curl http://localhost:8080/health
 ```
 
-faça a chamada para obter o shard especifico 
+faça a chamada para rota de proxy reverso para ser redirecionado
 
 ```shell
-curl 'http://localhost:8081/v1/shard?tenant=partner&customerId=osouzaelias'
+curl 'http://localhost:8080/' -H 'X-Tenant-ID: 1' -H 'X-Customer-ID: osouzaelias'
 ```
 
 
