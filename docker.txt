@@ -1,0 +1,8 @@
+docker buildx build --platform linux/amd64 -t go-shard .
+docker tag go-shard osouzaelias/go-shard:0.1.7
+docker push osouzaelias/go-shard:0.1.7
+
+
+curl 'http://localhost:8080/' -H 'X-Tenant-ID: 1' -H 'X-Customer-ID: osouzaelias'
+curl 'http://localhost:53437/' -H 'X-Tenant-ID: 1' -H 'X-Customer-ID: osouzaelias'
+
