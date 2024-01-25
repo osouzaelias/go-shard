@@ -8,22 +8,23 @@ import (
 
 func (a Adapter) Proxy(w http.ResponseWriter, r *http.Request) {
 	tenantID := r.Header.Get("X-Tenant-ID")
+	shardID := r.Header.Get("X-Shard-ID")
 	customerID := r.Header.Get("X-Customer-ID")
 
-	if tenantID == "" || customerID == "" {
+	if tenantID == "" || shardID == "" || customerID == "" {
 		http.Error(w, "Required headers not found", http.StatusBadRequest)
 		return
 	}
 
-	shard, err := a.api.GetShard(r.Context(), tenantID, customerID)
+	cell, err := a.api.GetCell(r.Context(), tenantID, shardID, customerID)
 	if err != nil {
-		http.Error(w, "Unable to identify shard", http.StatusBadRequest)
+		http.Error(w, "Unable to identify cell", http.StatusBadRequest)
 		return
 	}
 
-	address, err := url.Parse(shard.Address)
+	address, err := url.Parse(cell.Address)
 	if err != nil {
-		http.Error(w, "Error parsing shard URL", http.StatusInternalServerError)
+		http.Error(w, "Error parsing cell URL", http.StatusInternalServerError)
 		return
 	}
 

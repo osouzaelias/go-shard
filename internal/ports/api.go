@@ -6,5 +6,5 @@ import (
 )
 
 type APIPort interface {
-	GetShard(ctx context.Context, tenant, customerID string) (*domain.Shard, error)
+	GetCell(ctx context.Context, tenantID, shardID, customerID string) (*domain.Cell, error)
 }

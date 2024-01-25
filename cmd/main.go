@@ -14,10 +14,6 @@ func main() {
 		log.Fatalf("Failed to connect to database. Error: %v", err)
 	}
 
-	//application := api.NewApplication(dbAdapter)
-	//grpcAdapter := grpc.NewAdapter(application, config.GetPort())
-	//grpcAdapter.Run()
-
 	application := api.NewApplication(dbAdapter)
 	restAdapter := rest.NewAdapter(application, config.GetPort())
 	restAdapter.Run()

@@ -17,26 +17,27 @@ func NewApplication(db ports.DBPort) *Application {
 	}
 }
 
-func (a Application) GetShard(ctx context.Context, tenantID, customerID string) (*domain.Shard, error) {
-	shardNames := make([]string, 0)
+var cells *[]domain.Cell
+var rz *domain.Rendezvous
 
-	shards, _ := a.db.Get(ctx, tenantID)
-	for _, s := range *shards {
-		shardNames = append(shardNames, s.ShardID)
+func (a Application) GetCell(ctx context.Context, tenantID, shardID, customerID string) (*domain.Cell, error) {
+	cellNames := make([]string, 0)
+
+	if cells == nil {
+		cells, _ = a.db.Get(ctx, domain.CreateCellID(tenantID, shardID))
+		for _, c := range *cells {
+			cellNames = append(cellNames, c.Name)
+		}
+		rz = domain.NewRendezvous(cellNames, xxhash.Sum64String)
 	}
 
-	rendezvous := domain.NewRendezvous(shardNames, xxhash.Sum64String)
+	name := rz.Lookup(customerID)
 
-	shardID := rendezvous.Lookup(customerID)
-	for _, s := range *shards {
-		if s.ShardID == shardID {
-			return &domain.Shard{
-				ShardID:  shardID,
-				TenantID: s.TenantID,
-				Address:  s.Address,
-			}, nil
+	for _, c := range *cells {
+		if c.Name == name {
+			return &c, nil
 		}
 	}
 
-	return &domain.Shard{}, nil
+	return &domain.Cell{}, nil
 }

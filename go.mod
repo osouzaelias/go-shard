@@ -9,8 +9,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.6.12
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.26.6
 	github.com/cespare/xxhash/v2 v2.2.0
-	google.golang.org/grpc v1.59.0
-	google.golang.org/protobuf v1.31.0
 )
 
 require (
@@ -28,10 +26,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.25.1 // indirect
 	github.com/aws/smithy-go v1.19.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	golang.org/x/net v0.14.0 // indirect
-	golang.org/x/sys v0.11.0 // indirect
-	golang.org/x/text v0.12.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230822172742-b8732ec3820d // indirect
 )

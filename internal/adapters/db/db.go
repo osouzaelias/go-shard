@@ -10,11 +10,6 @@ import (
 	"go-shard/internal/application/core/domain"
 )
 
-type Shard struct {
-	Tenant string `dynamodbav:"tenant"`
-	Total  uint8  `dynamodbav:"numberOfShards"`
-}
-
 type Adapter struct {
 	db        *dynamodb.Client
 	tableName string
@@ -29,10 +24,10 @@ func NewAdapter(region, tableName string) (*Adapter, error) {
 	return &Adapter{db: client, tableName: tableName}, nil
 }
 
-func (a Adapter) Get(ctx context.Context, tenantID string) (*[]domain.Shard, error) {
-	var shards = make([]domain.Shard, 0)
+func (a Adapter) Get(ctx context.Context, id string) (*[]domain.Cell, error) {
+	var cells = make([]domain.Cell, 0)
 
-	partitionKey := expression.Key("tenantID").Equal(expression.Value(tenantID))
+	partitionKey := expression.Key("id").Equal(expression.Value(id))
 	expr, err := expression.NewBuilder().WithKeyCondition(partitionKey).Build()
 
 	input := &dynamodb.QueryInput{
@@ -48,10 +43,10 @@ func (a Adapter) Get(ctx context.Context, tenantID string) (*[]domain.Shard, err
 		return nil, err
 	}
 
-	err = attributevalue.UnmarshalListOfMaps(out.Items, &shards)
+	err = attributevalue.UnmarshalListOfMaps(out.Items, &cells)
 	if err != nil {
 		return nil, err
 	}
 
-	return &shards, nil
+	return &cells, nil
 }

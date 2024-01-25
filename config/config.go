@@ -6,10 +6,6 @@ import (
 	"strconv"
 )
 
-func GetEnv() string {
-	return getEnvironmentValue("ENV")
-}
-
 func GetTableName() string {
 	return getEnvironmentValue("TABLE")
 }
