@@ -9,7 +9,7 @@ type Cell struct {
 }
 
 func CreateCellID(tenantID, shardID string) string {
-	return fmt.Sprintf("TENANT#%s#SHARD%s", tenantID, shardID)
+	return fmt.Sprintf("TENANT#%s#SHARD#%s", tenantID, shardID)
 }
 
 /* -- cell-mapping
